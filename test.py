@@ -4,8 +4,8 @@ from motors import MotorSet
 
 class TestMotorSet(unittest.TestCase):
     def test_move_300_216(self):
-        motor_set = MotorSet([0, 305], 2, 12.5)
-        xy = (300, 180,)
+        motor_set = MotorSet([0, 305], 3, 15)
+        xy = (290, 195,)
 
         print(f"Moving to {xy[0]} {xy[1]}")
         motor_set.move_xy(xy[0], xy[1])

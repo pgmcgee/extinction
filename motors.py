@@ -14,7 +14,7 @@ import os
 """
 
 STEP_DEGREES = 1.8
-SPOOL_CIRCUMFERENCE = 7.5
+SPOOL_CIRCUMFERENCE = 7.8
 
 
 class Motor:
@@ -118,7 +118,9 @@ class MotorSet:
         return x, y
 
     def _evaluate_new_point(self, new_x, new_y, result_x, result_y):
-        return math.sqrt((result_x - new_x) ** 2 + (result_y - new_y) ** 2)
+        distance_from_point = math.sqrt((result_x - new_x) ** 2 + (result_y - new_y) ** 2)
+        distance_from_line = self._distance_from_line(self.original_x, self.original_y, result_x, result_y, new_x, new_y)
+        return 2 * distance_from_point ** 2 + distance_from_line ** 3
 
     # def _evaluate_new_point(self, new_x, new_y, result_x, result_y):
     #     new_y_slope = new_y - self.y

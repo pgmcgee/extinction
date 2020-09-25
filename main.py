@@ -16,7 +16,7 @@ motor_set = MotorSet([0, 305], 2, 12.5)
 
 
 def move_lantern():
-    motor_set.move_xy(300, 180)
+    motor_set.move_xy(290, 195)
 
 def dim_all_lights():
     for l in b.lights:
