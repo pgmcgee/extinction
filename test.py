@@ -1,11 +1,26 @@
-from phue import Bridge
+import unittest
+from motors import MotorSet
 
-b = Bridge("192.168.1.126")
-b.connect()
 
-b.get_api()
+class TestMotorSet(unittest.TestCase):
+    def test_move_300_216(self):
+        motor_set = MotorSet([0, 305], 2, 12.5)
+        xy = (300, 180,)
 
-for l in b.lights:
-    l.transitiontime = 1
-    l.hue = 15331
-    l.saturation = 127
+        print(f"Moving to {xy[0]} {xy[1]}")
+        motor_set.move_xy(xy[0], xy[1])
+
+        xy = (2, 12.5,)
+        print(f"\n\n\n\n   !!!! Moving to {xy[0]} {xy[1]} !!!!\n\n\n\n")
+        motor_set.move_xy(xy[0], xy[1])
+
+    # def test_move_300_216(self):
+    #     motor_set = MotorSet([0, 305], 300, 180)
+    #     xy = (2, 12.5,)
+    #
+    #     print(f"Moving to {xy[0]} {xy[1]}")
+    #     motor_set.move_xy(xy[0], xy[1])
+
+
+if __name__ == '__main__':
+    unittest.main()
