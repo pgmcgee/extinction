@@ -7,6 +7,9 @@ from adafruit_motor import stepper
 
 import math
 import os
+# from queue import Queue
+# from threading import Thread
+from multiprocessing import Process, Queue
 
 """
     All length measurements in this package are in `cm`
@@ -25,12 +28,15 @@ class Motor:
         self.length = length
         self.stepper = stepper
         self.spool_circumference = SPOOL_CIRCUMFERENCE
+        self.queue = Queue(maxsize=10)
+        self.processing_thread = Process(target=self.process_queue, args=(self.queue,))
+        self.processing_thread.start()
 
     def onestep(self, direction=stepper.BACKWARD):
         print(f"Moving {self.name} " + ("forward" if direction == stepper.FORWARD else "backward"))
 
         if os.environ.get("ENV") != "test":
-            self.stepper.onestep(direction=direction)
+            self.queue.put(direction)
         self.length = self.nextstep(direction)
 
     def nextstep(self, direction=stepper.BACKWARD):
@@ -42,6 +48,14 @@ class Motor:
             return direction == stepper.BACKWARD
         else:
             return direction == stepper.FORWARD
+
+    def process_queue(self, queue):
+        while True:
+            direction = queue.get()
+            self.stepper.onestep(direction=direction)
+
+    def stop(self):
+        self.processing_thread.terminate()
 
 
 class MotorSet:
@@ -96,6 +110,10 @@ class MotorSet:
             self.x, self.y = self._calculate_xy()
 
         self.original_x, self.original_y = self.x, self.y
+
+    def stop(self):
+        self.motor1.stop()
+        self.motor2.stop()
 
     def _distance_from_line(self, x1, y1, x2, y2, x0, y0):
         return abs((y2 - y1) * x0 - (x2 - x1) * y0 + (x2 * y1) - (y2 * x1)) / math.sqrt((y2 - y1) ** 2 + (x2 - x1) ** 2)

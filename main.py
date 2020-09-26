@@ -90,12 +90,13 @@ def reset():
         print("There was an error setting lights after reset")
 
 if __name__ == '__main__':
-    while True:
-        try:
-            dim_all_lights()
-            time.sleep(5)
-            move_lantern()
-            explosion()
-            time.sleep(10)
-        finally:
-            reset()
+    # while True:
+    try:
+        dim_all_lights()
+        time.sleep(5)
+        move_lantern()
+        explosion()
+        time.sleep(10)
+    finally:
+        reset()
+    motor_set.stop()
