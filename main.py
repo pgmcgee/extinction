@@ -1,6 +1,6 @@
 from phue import Bridge
 import time
-from playsound import playsound
+import pygame
 import threading
 from motors import MotorSet
 
@@ -14,9 +14,12 @@ b.get_api()
 
 motor_set = MotorSet([0, 305], 2, 12.5)
 
+pygame.mixer.init()
+bomb_sound = pygame.mixer.music.load("./Atomic_Bomb-Sound_Explorer-897730679.mp3")
+
 
 def move_lantern():
-    motor_set.move_xy(290, 195)
+    motor_set.move_xy(275, 190)
 
 def dim_all_lights():
     for l in b.lights:
@@ -24,7 +27,7 @@ def dim_all_lights():
 
 def explosion():
     colors = [[20, 40, 0], [0, 20, 40], [40, 0, 20]]
-    colors = colors * 2
+    colors = colors * 3
 
     for l in b.lights:
         l.on = True
@@ -39,8 +42,8 @@ def explosion():
     explosion_light.hue = HUE_MAX * 20 / HUE_CONVERT
     explosion_light.transitiontime = 2
 
-    sound_thread = threading.Thread(target=lambda: playsound('./Atomic_Bomb-Sound_Explorer-897730679.mp3'))
-    sound_thread.start()
+    pygame.mixer.music.play()
+    time.sleep(0.8)
     for i in range(3):
         explosion_light.transitiontime = 10
         explosion_light.brightness = 255
@@ -87,10 +90,12 @@ def reset():
         print("There was an error setting lights after reset")
 
 if __name__ == '__main__':
-    try:
-        dim_all_lights()
-        move_lantern()
-        explosion()
-        time.sleep(10)
-    finally:
-        reset()
+    while True:
+        try:
+            dim_all_lights()
+            time.sleep(5)
+            move_lantern()
+            explosion()
+            time.sleep(10)
+        finally:
+            reset()
