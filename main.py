@@ -23,6 +23,7 @@ def move_lantern():
 
 def dim_all_lights():
     for l in b.lights:
+        l.transitiontime = None
         l.on = False
 
 def explosion():
@@ -35,7 +36,7 @@ def explosion():
     for l in b.lights:
         l.brightness = 0  # Max brightness
         l.saturation = 254  # Max saturation
-        l.transitiontime = 0
+        l.transitiontime = None
 
     # Explosion
     explosion_light = b.lights[2]
@@ -68,14 +69,14 @@ def explosion():
         time.sleep(0.3)
 
     for l in b.lights:
-        l.transitiontime = 0
+        l.transitiontime = None
         l.brightness = 0
 
 def reset():
     try:
         for l in b.lights:
             l.on = True
-            l.transitiontime = 0
+            l.transitiontime = None
             l.brightness = 254
             l.hue = HUE_MAX * 60 / HUE_CONVERT
     except:
@@ -85,6 +86,9 @@ def reset():
 
     try:
         for l in b.lights:
+            l.brightness = 0
+            l.hue = HUE_MAX * 20 / HUE_CONVERT
+            l.transitiontime = None
             l.on = False
     except:
         print("There was an error setting lights after reset")
