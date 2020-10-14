@@ -12,4 +12,4 @@ everything starts again.
 
 ## Video
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/QXNrLBsNS9I" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+Video on Youtube: https://www.youtube.com/watch?v=QXNrLBsNS9I
