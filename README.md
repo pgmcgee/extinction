@@ -12,5 +12,5 @@ everything starts again.
 
 ## Video
 
-Video on Youtube: https://www.youtube.com/watch?v=QXNrLBsNS9I
+Video on Youtube: https://www.youtube.com/watch?v=QXNrLBsNS9I  
 Behind the Scenes: https://www.youtube.com/watch?v=w2QXQ8WBnp0
